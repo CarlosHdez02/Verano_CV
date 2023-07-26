@@ -51,6 +51,8 @@ def Detector_n_Velocity(video):
     plt.grid()
 
     lista_velocidades = [] #Creo un vector para guardar las velocidades
+    lista_distancia = [] #Guardo las distancias
+    lista_rapidez =[]
 
     # Graficar cada trayectoria
     for id_objeto, trayectoria in trayectorias.items():
@@ -64,22 +66,33 @@ def Detector_n_Velocity(video):
         y = np.array(y) #Se crea un vector para la posicion y
 
         # distancia total recorrida
+       
         distancia_total = np.sqrt((x[-1] - x[0]) ** 2 + (y[-1] - y[0]) ** 2)
-
+        
         # Calcula el tiempo, se usa len para encontrar la longitud de la trayectoria
         tiempo_total = len(trayectoria) - 1 #-1 para contar los pasos una vez empieza
 
-        # Calcula la velocidad promedio
+        # Calcula la velocidad promedio y distancia recorrida total
         velocidad_promedio = distancia_total / tiempo_total
-        print(f"Velocidad promedio para objeto {id_objeto}: {velocidad_promedio}")
+        magnitud_rapidez = np.abs(velocidad_promedio)  # La magnitud es el valor absoluto de la velocidad
+        #lista_rapidez.append(magnitud_rapidez)
+        print(f"Velocidad promedio para el peaton {id_objeto}: {velocidad_promedio}")
+        print(f"Distancia para el peaton {id_objeto}: {distancia_total}")
+        #print(f"Rapidez del objeto: {id_objeto}: {rapidez}")
         
         #Ahora lo guardo en un CSV
         lista_velocidades.append({'ID_Peaton': id_objeto, 'Velocidad_promedio': velocidad_promedio})
-
+        lista_distancia.append({'ID_peaton': id_objeto, 'Distancia recorrida': distancia_total})
+        lista_rapidez.append({'ID_peaton': id_objeto, 'Rapidez': magnitud_rapidez})
+        #lista_rapidez.append({'ID_peaton': id_objeto, 'Rapidez: ':rapidez})
 
         df = pd.DataFrame(lista_velocidades)
+        df_distancia = pd.DataFrame(lista_distancia)
+        df_rapidez = pd.DataFrame(lista_rapidez)
 
-        df.to_csv('Velocidades2.csv', index=False)
+        #df.to_csv('Velocidades Hoy.csv', index=False)
+        #df_distancia.to_csv('Distancias Hoy.csv',index=False)
+        df_rapidez.to_csv('Rapidez hoy.csv',index=False)
 
     # Showing the picture
     plt.legend(bbox_to_anchor=(1, 1), loc='upper left')
@@ -186,5 +199,4 @@ Detector_n_Velocity(cap)
 #detector_n_tracker(cap)
 #ground_truth(cap)
 
-#Subir yolov8n
 

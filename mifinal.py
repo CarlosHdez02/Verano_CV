@@ -5,7 +5,7 @@ from sort import Sort
 import matplotlib.pyplot as plt
 import pandas as pd
 
-cap = cv2.VideoCapture("/Users/carloshernandez/Desktop/verano/pedestrian_dataset_1.mp4")
+cap = cv2.VideoCapture("video path here")
 model = YOLO("yolov8n.pt")
 tracker = Sort()
 trayectorias = {}
